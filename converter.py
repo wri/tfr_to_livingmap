@@ -10,6 +10,7 @@ from affine import Affine
 from rasterio.crs import CRS
 import rasterio as rio
 import tensorflow as tf
+from retrying import retry
 import mproc
 from config import FEATURE_PROPS, INPUT_BANDS, RGB_BANDS, CLOUD_BANDS, BANDS
 from config import SIZE, HALF_SIZE, RES, BUCKET, FOLDER, NOISY, NOISE_REDUCER
@@ -107,6 +108,10 @@ def get_profile(lon,lat,crs,size=SIZE):
             'width': SIZE }
 
 
+@retry(
+    wait_exponential_multiplier=1000, 
+    wait_exponential_max=10000,
+    stop_max_attempt_number=7)
 def to_gcs(
         src,
         dest,
