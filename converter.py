@@ -1,5 +1,6 @@
 import sys,os 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 import re
 import numpy as np
@@ -17,14 +18,16 @@ from config import FOLDER, BUCKET
 # MAIN
 #
 def run(
-    gcs_service,
     run_name,
     dataset,
+    gcs_service=None,
     folder=FOLDER,
     bucket=BUCKET,
     take=5,
     skip=None):
     rows=[]
+    if not gcs_service:
+        gcs_service=build('storage', 'v1')
     for i,element in enumerate(dataset.skip(skip).take(take)):
         if NOISY and (not (i%NOISE_REDUCER)): 
                 print(i,'...')
