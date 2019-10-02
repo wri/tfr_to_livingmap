@@ -41,6 +41,8 @@ def run(
         tile_id=props['tile_id']
         date=props['date']
         date=re.sub('-','',date)
+        props['rgb_mean']=rgb.mean()
+        props['rgb_stdev']=rgb.std()
         _tif_to_gcs(
             gcs_service,
             inpt,
@@ -85,8 +87,7 @@ def rgb_image(im_dict):
 
 
 def properties(elm):
-    jsn={ k: _clean(tf.get_static_value(elm[k])) for k in FEATURE_PROPS }
-    return jsn
+    return { k: _clean(tf.get_static_value(elm[k])) for k in FEATURE_PROPS }
 
 
 def get_profile(lon,lat,crs,size=SIZE):
