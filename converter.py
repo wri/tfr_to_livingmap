@@ -26,8 +26,6 @@ def run(
     take=5,
     skip=None):
     rows=[]
-    if not gcs_service:
-        gcs_service=build('storage', 'v1')
     for i,element in enumerate(dataset.skip(skip).take(take)):
         if NOISY and (not (i%NOISE_REDUCER)): 
                 print(i,'...')
@@ -110,13 +108,15 @@ def get_profile(lon,lat,crs,size=SIZE):
 
 
 def to_gcs(
-        gcs_service,
         src,
         dest,
         mtype,
+        gcs_service=None,
         folder=None,
         bucket=BUCKET):
-    media = MediaFileUpload(
+    if not gcs_service:
+        gcs_service=build('storage', 'v1')
+    media=MediaFileUpload(
             src, 
             mimetype=mtype,
             resumable=True)
@@ -152,12 +152,12 @@ def _tif_to_gcs(gcs_service,im,profile,tile_id,date,folder=FOLDER,bucket=BUCKET)
         with rio.open('tmp.tif','w',**profile) as dst:
                 dst.write(im)
         to_gcs(
-                gcs_service=gcs_service,
-                src='tmp.tif',
-                dest=f'{tile_id}-{date}.tif',
-                mtype='image/tiff',
-                folder=f'{folder}/S2',
-                bucket=bucket)
+            gcs_service=gcs_service,
+            src='tmp.tif',
+            dest=f'{tile_id}-{date}.tif',
+            mtype='image/tiff',
+            folder=f'{folder}/S2',
+            bucket=bucket)
 
 
 def _png_to_gcs(gcs_service,im,profile,tile_id,date,folder=FOLDER,bucket=BUCKET):
