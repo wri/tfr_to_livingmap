@@ -10,7 +10,8 @@ from rasterio.crs import CRS
 import rasterio as rio
 import tensorflow as tf
 from config import COMPRESSION_TYPE, PARALLEL_FILE_READS, PARALLEL_PARSE_CALLS
-from config import DEFAULT_STR_VALUE, DEFAULT_NB_VALUE, PATCH_DIMS
+from config import DEFAULT_STR_VALUE, DEFAULT_NB_VALUE
+from config import BANDS, FEATURE_PROPS, PATCH_DIMS
 import mproc
 #
 # MAIN
