@@ -49,8 +49,8 @@ def run(
         src='tmp.csv',
         dest=run_name,
         mtype='text/csv',
-        folder=f'{FOLDER}/CSV')
-    print(f'log: gs://{BUCKET}/{FOLDER}/CSV/{run_name}')
+        folder=f'{folder}/CSV')
+    print(f'log: gs://{bucket}/{folder}/CSV/{run_name}')
 
 
 
