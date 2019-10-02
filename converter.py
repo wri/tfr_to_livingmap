@@ -45,7 +45,7 @@ def run(
             inpt,
             profile,
             tile_id,
-            date
+            date,
             folder,
             bucket)
         _png_to_gcs(
@@ -53,7 +53,7 @@ def run(
             rbg,
             profile,
             tile_id,
-            date
+            date,
             folder,
             bucket)      
         rows.append(props)
