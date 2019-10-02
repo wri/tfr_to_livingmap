@@ -1,3 +1,5 @@
+import sys,os 
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 from googleapiclient.http import MediaFileUpload
 import re
 import numpy as np
