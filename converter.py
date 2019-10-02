@@ -33,7 +33,7 @@ def run(
         props=properties(element)
         im_dict={b: element[b].numpy() for b in BANDS}
         inpt=_get_image(im_dict,INPUT_BANDS,np.uint16)
-        rbg=_get_image(im_dict,RGB_BANDS,np.uint8)
+        rgb=_get_image(im_dict,RGB_BANDS,np.uint8)
         profile=get_profile(
                 props['lon'],
                 props['lat'],
@@ -53,7 +53,7 @@ def run(
             bucket)
         _png_to_gcs(
             gcs_service,
-            rbg,
+            rgb,
             profile,
             tile_id,
             date,
