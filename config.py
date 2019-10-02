@@ -35,7 +35,7 @@ PATCH_DIMS=[SIZE, SIZE]
 #
 BUCKET='living-map-dev'
 FOLDER='tmp'
-NOISY=True
+NOISY=False
 NOISE_REDUCER=5
 #
 # PARSER

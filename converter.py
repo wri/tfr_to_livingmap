@@ -39,8 +39,22 @@ def run(
         tile_id=props['tile_id']
         date=props['date']
         date=re.sub('-','',date)
-        _tif_to_gcs(gcs_service,inpt,profile,tile_id,date)
-        _png_to_gcs(gcs_service,rbg,profile,tile_id,date)      
+        _tif_to_gcs(
+            gcs_service,
+            inpt,
+            profile,
+            tile_id,
+            date
+            folder,
+            bucket)
+        _png_to_gcs(
+            gcs_service,
+            rbg,
+            profile,
+            tile_id,
+            date
+            folder,
+            bucket)      
         rows.append(props)
     df=pd.DataFrame(rows)
     df.to_csv('tmp.csv')
@@ -148,15 +162,18 @@ def _png_to_gcs(gcs_service,im,profile,tile_id,date,folder=FOLDER,bucket=BUCKET)
         profile['count']=len(RGB_BANDS)
         profile['driver']='PNG'
         profile['dtype']='uint8'
+        profile.pop('compress')
+        profile.pop('interleave')
+        profile.pop('tiled')
         with rio.open('tmp.png','w',**profile) as dst:
-                dst.write(im)
+            dst.write(im)
         to_gcs(
-                gcs_service=gcs_service,
-                src='tmp.png',
-                dest=f'{tile_id}-{date}.png',
-                mtype='image/png',
-                folder=f'{folder}/RGB',
-                bucket=bucket)
+            gcs_service=gcs_service,
+            src='tmp.png',
+            dest=f'{tile_id}-{date}.png',
+            mtype='image/png',
+            folder=f'{folder}/RGB',
+            bucket=bucket)
 
 
 
