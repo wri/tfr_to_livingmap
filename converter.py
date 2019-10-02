@@ -24,7 +24,7 @@ def run(
     gcs_service=None,
     folder=FOLDER,
     bucket=BUCKET,
-    take=5,
+    take=-1,
     skip=None):
     rows=[]
     for i,element in enumerate(dataset.skip(skip).take(take)):
