@@ -25,10 +25,12 @@ def run(
     folder=FOLDER,
     bucket=BUCKET,
     take=-1,
-    skip=None):
+    skip=None,
+    noisy=NOISY,
+    noise_reducer=NOISE_REDUCER):
     rows=[]
     for i,element in enumerate(dataset.skip(skip).take(take)):
-        if NOISY and (not (i%NOISE_REDUCER)): 
+        if noisy and (not (i%noise_reducer)): 
                 print(i,'...')
         props=properties(element)
         im_dict={b: element[b].numpy() for b in BANDS}
