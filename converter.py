@@ -25,7 +25,7 @@ def run(
     folder=FOLDER,
     bucket=BUCKET,
     take=-1,
-    skip=None,
+    skip=0,
     noisy=NOISY,
     noise_reducer=NOISE_REDUCER):
     rows=[]
